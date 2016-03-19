@@ -76,15 +76,18 @@ char setPreced = 0, plusPreced = 0, moinsPreced = 0, pos3Preced = 0, snoozePrece
 char heureSnooze = 0, minuteSnooze = 0, snoozeOn = 0;
 char alarmeEnMarche = 0;
 
+//wait (long microsecondes)
+// arrête le programme pendant précisément la periode donnée en paramètre
+// période en millisecondes comprise entre 0 et 32767
 void wait(long microsecondes)
 {
 	long i = 0;
 
 	for (; i < microsecondes; i++);
 }
-//Fonction à écrire
-// arrête le programme pendant précisément la periode donnée en paramètre
-// période en millisecondes comprise entre 0 et 32767
+
+//EtatAffichage etatAffichage () 
+//Renvoie l'affichage sur les 7 Segments en fonction des positions du reste
 
 EtatAffichage etatAffichage()
 {
@@ -100,6 +103,8 @@ EtatAffichage etatAffichage()
 		return ALARME;
 }
 
+//Fait clignoter le 7Segment de la partie gauche ou droite ou nul part
+
 Clignotement etatClignotement()
 {
 	if (etatModification == 0)
@@ -110,6 +115,7 @@ Clignotement etatClignotement()
 		return DROITE;
 }
 
+
 void faireSet()
 {
 	if (POS3_3)
@@ -119,7 +125,7 @@ void faireSet()
 	else
 		etatModification = etatModification%2+5;
 }
-
+//fairePlus, gère l'appui sur le bouton +
 void fairePlus()
 {
 	char maxJour;
@@ -170,6 +176,7 @@ void fairePlus()
 	}
 }
 
+//faireMoins, gère l'appui sur le bouton moins
 void faireMoins()
 {
 	char maxJour;
@@ -216,6 +223,8 @@ void faireMoins()
 	}
 }
 
+//Gère l'appui sur le bouton snooze et donc retarde l'heure
+
 void faireSnooze()
 {
 	if (INTERR_ALARME && alarmeEnMarche)
@@ -249,6 +258,9 @@ char decimalToBCD(char chiffre)
 	
 	return valeurs[chiffre];
 }
+
+
+//tabToBCD convertit un tableau en affichage pour 7 segments
 
 void tabToBCD(char chiffre[])
 {
@@ -316,6 +328,9 @@ void afficher(char chiffres[], Clignotement cligno, char afficherCligno, char le
 	AFFICHEUR = 0;
 }
 
+//Allume les leds ou non
+//param1 : allumer les leds ou pas (0/1)
+//param2 : Allumer les leds du haut ou du bas (0/1)
 void setLedsEcran(int allumer, int basEtHaut)
 {
 	LED_HAUT = 0b0;
@@ -334,6 +349,8 @@ int main(int argc, char *argv[])
 //Fonction principale du programme. Cette fonction n'est pas complète et sera mise à jour régulièrement
 //Certaines variables de cette fonction pourront devenir des variables globales, nottemment pour pouvoir être accessibles par les interruptions
 //1e MAJ : 01/02/16
+//2eme MAJ : 18/02/2016
+//3eme MAJ : 04/03/2016
 {
 	char affichage[4];
 	
